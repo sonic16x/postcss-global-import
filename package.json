@@ -1,0 +1,24 @@
+{
+  "name": "postcss-global-import",
+  "version": "1.0.0",
+  "description": "Post Css plugin for global import css.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scherebedov/postcss-global-import.git"
+  },
+  "keywords": [
+    "Postcss"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scherebedov/postcss-global-import/issues"
+  },
+  "homepage": "https://github.com/scherebedov/postcss-global-import#readme",
+  "dependencies": {
+    "postcss": "^5.2.4",
+    "resolve": "^1.1.7"
+  },
+  "engine": "node >= 6.0.0"
+}
