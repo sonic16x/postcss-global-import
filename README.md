@@ -18,6 +18,13 @@ npm install --save postcss-global-import
 /* Some Css */
 ```
 
+## Options
+
+### sync
+
+In case of sync enabled this plugin will be work synchronously. It's useful in case with usage
+`css-modules-require-hook` hook, which doesn't support async postcss plugins.
+
 ## Webpack config example
 ```js
 const globalImport = require('postcss-global-import');
