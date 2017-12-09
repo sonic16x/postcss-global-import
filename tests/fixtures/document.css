@@ -1,0 +1,5 @@
+@document url("https://www.example.com/") {
+  .foo {
+    color: green;
+  }
+}
