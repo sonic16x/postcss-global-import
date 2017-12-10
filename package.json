@@ -3,6 +3,9 @@
   "version": "1.0.2",
   "description": "Post Css plugin for global import css.",
   "main": "index.js",
+  "scripts": {
+    "test": "jest --useStderr"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scherebedov/postcss-global-import.git"
@@ -20,5 +23,11 @@
     "postcss": "^6.0.2",
     "resolve": "^1.1.7"
   },
-  "engine": "node >= 6.0.0"
+  "engine": "node >= 6.0.0",
+  "devDependencies": {
+    "cssnano": "^3.10.0",
+    "glob": "^7.1.2",
+    "jest": "^21.2.1",
+    "postcss-modules": "^1.1.0"
+  }
 }

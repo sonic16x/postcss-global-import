@@ -1,0 +1,5 @@
+@media (min-width: 640px) {
+  .foo {
+    display: none;
+  }
+}

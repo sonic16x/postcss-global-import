@@ -29,11 +29,10 @@ module.exports = postcss.plugin('postcss-global-import', function (options) {
 
       css.walkRules(rule => {
         const outer = rule.parent;
-        const inAtrule = outer.type === 'atrule';
-        const inKeyframes = outer.name && outer.name.indexOf('keyframes') === -1;
+        const inKeyframes = outer.name && outer.name.indexOf('keyframes') !== -1;
 
-        if (!inAtrule && !inKeyframes) {
-          rule.replaceWith(postcss.parse(`:global { ${rule.toString()} }`, {
+        if (!inKeyframes) {
+          rule.replaceWith(postcss.parse(`:global ${rule.toString()}`, {
             from: modulePath
           }));
         }
