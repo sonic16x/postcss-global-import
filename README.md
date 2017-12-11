@@ -60,6 +60,38 @@ We will get:
 In case of sync enabled this plugin will be work synchronously. It's useful in case with usage
 `css-modules-require-hook` hook, which doesn't support async postcss plugins.
 
+## Known limitations
+
+This plugin do nothing for css animation names.
+
+And currently, there is no way to escape animation name in `animation-name` or a`animation` properties
+for plugin [postcss-modules-local-by-default](https://www.npmjs.com/package/postcss-modules-local-by-default)
+which currently using as dependency [postcss-modules](https://github.com/css-modules/postcss-modules) plugin.
+So, in other words, if you are using [postcss-modules](https://github.com/css-modules/postcss-modules) or
+ [postcss-modules-local-by-default](https://www.npmjs.com/package/postcss-modules-local-by-default) plugins, following css would
+ be not imported properly:
+
+```css
+@keyframes myCoolAnimation {
+}
+
+.foo {
+	animation: myCoolAnimation;
+}
+```
+
+And animation property value `myCoolAnimation` will be renamed:
+
+```css
+@keyframes myCoolAnimation {
+}
+
+.foo {
+	animation: _myCoolAnimation__7zliz_1;
+}
+```
+
+
 ## Webpack config example
 ```js
 const globalImport = require('postcss-global-import');
