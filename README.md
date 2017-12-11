@@ -60,15 +60,15 @@ We will get:
 In case of sync enabled this plugin will be work synchronously. It's useful in case with usage
 `css-modules-require-hook` hook, which doesn't support async postcss plugins.
 
-## Known limitations
+## globalizeKeyframes
 
-This plugin do nothing for css animation names.
-
-And currently, there is no way to escape animation name in `animation-name` or a`animation` properties
+By default, `postcss-global-import` do nothing with keyframe names,
+because there is no way to escape animation name in `animation-name` or a`animation` properties
 for plugin [postcss-modules-local-by-default](https://www.npmjs.com/package/postcss-modules-local-by-default)
 which currently using as dependency [postcss-modules](https://github.com/css-modules/postcss-modules) plugin.
 So, in other words, if you are using [postcss-modules](https://github.com/css-modules/postcss-modules) or
- [postcss-modules-local-by-default](https://www.npmjs.com/package/postcss-modules-local-by-default) plugins, following css would
+ [postcss-modules-local-by-default](https://www.npmjs.com/package/postcss-modules-local-by-default) plugins **and**
+ turn on `globalizeKeyframes` option, following css would
  be not imported properly:
 
 ```css
@@ -80,7 +80,7 @@ So, in other words, if you are using [postcss-modules](https://github.com/css-mo
 }
 ```
 
-And animation property value `myCoolAnimation` will be renamed:
+And animation property value `myCoolAnimation` will be renamed but keyframe name not:
 
 ```css
 @keyframes myCoolAnimation {
@@ -90,6 +90,8 @@ And animation property value `myCoolAnimation` will be renamed:
   animation: _myCoolAnimation__7zliz_1;
 }
 ```
+
+Turn this option on only if you want import keyframes itself and there are no usage of these keyframes in imported file.
 
 
 ## Webpack config example

@@ -10,13 +10,13 @@ const globalImport = require('../');
 const modules = require('postcss-modules');
 const cssnano = require('cssnano');
 
-function processCss(file) {
+function processCss(file, options = {}) {
   const masterPath = file.replace(/\.css$/, '.master.css');
   const css = `@global-import "${file}"`;
 
   return new Promise(resolve => {
     postcss([
-      globalImport,
+      globalImport(options),
       modules({ getJSON: ()=> {} }),
       cssnano()
     ])
@@ -42,8 +42,11 @@ describe('fixtures should be the same after being global imported and modulesifi
     .map(filePath => path.resolve(filePath));
 
   for (let filePath of files) {
-    test(`fixture ${path.basename(filePath)}`, async () => {
-      const processedCss = await processCss(filePath);
+    const basename = path.basename(filePath);
+    test(`fixture ${basename}`, async () => {
+      const processedCss = await processCss(filePath, {
+        globalizeKeyframes: basename === 'only-keyframes.css',
+      });
       const expectedCss = await readExpectedFile(filePath);
 
       expect(processedCss).toEqual(expectedCss);
