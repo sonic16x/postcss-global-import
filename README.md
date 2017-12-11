@@ -62,12 +62,15 @@ In case of sync enabled this plugin will be work synchronously. It's useful in c
 
 ### globalizeKeyframes
 
+[postcss-modules]: https://github.com/css-modules/postcss-modules
+[postcss-modules-local-by-default]: https://www.npmjs.com/package/postcss-modules-local-by-default
+
 By default, `postcss-global-import` do nothing with keyframe names,
-because there is no way to escape animation name in `animation-name` or a`animation` properties
-for plugin [postcss-modules-local-by-default](https://www.npmjs.com/package/postcss-modules-local-by-default)
-which currently using as dependency [postcss-modules](https://github.com/css-modules/postcss-modules) plugin.
-So, in other words, if you are using [postcss-modules](https://github.com/css-modules/postcss-modules) or
- [postcss-modules-local-by-default](https://www.npmjs.com/package/postcss-modules-local-by-default) plugins **and**
+because there is no way to escape animation name in `animation-name` or `animation` properties
+for plugin [postcss-modules-local-by-default][]
+which currently using as dependency [postcss-modules][] plugin.
+So, in other words, if you are using [postcss-modules][] or
+ [postcss-modules-local-by-default][] plugins **and**
  turn on `globalizeKeyframes` option, following css would
  be not imported properly:
 
@@ -92,23 +95,24 @@ And animation property value `myCoolAnimation` will be renamed but keyframe name
 ```
 
 Turn this option on only if you want import keyframes itself and there are no usage of these keyframes in imported file.
+In this case postcss-global-import plugin turns
 
-
-## Webpack config example
-```js
-const globalImport = require('postcss-global-import');
-
-module.exports = {
-  module: {
-      loaders: [
-          {
-              test:   /\.css$/,
-              loader: "style-loader!css-loader!postcss-loader"
-          }
-      ]
-  },
-  postcss: [
-    globalImport()
-  ]
+```css
+@keyframes myCoolAnimation {
 }
 ```
+
+into
+
+```css
+@keyframes :global(myCoolAnimation) {
+}
+```
+
+This semantic for keyframe names is supported by [postcss-modules-local-by-default][].
+There is new [postcss-icss-keyframes](https://github.com/css-modules/postcss-icss-keyframes) plugin (which is coming to replace [postcss-modules-local-by-default][] along with [postcss-icss-selectors](https://www.npmjs.com/package/postcss-icss-selectors)) which currently doesn't support any mechanics for escaping keyframe names from renaming. PRs for both postcss-icss-keyframes and postcss-global-import are welcome.
+
+## Configuring Webpack
+
+Basically only thing you should do is include this plugin to plugin list inside your `postcss.config.js` file and configure any [postcss loader](https://github.com/postcss/postcss-loader) for your css files.
+
