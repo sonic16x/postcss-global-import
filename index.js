@@ -49,6 +49,7 @@ function globalizeSelectors (selector) {
  */
 module.exports = postcss.plugin('postcss-global-import', function (options) {
   const sync = options && options.sync;
+  const globalizeKeyframes = options && options.globalizeKeyframes;
 
   return function (root, result) {
     const processCss = (str, modulePath, atRule) => {
@@ -57,11 +58,14 @@ module.exports = postcss.plugin('postcss-global-import', function (options) {
       });
 
       // Выставляем названия директив @keyframes в global
-      css.walkAtRules(rule => {
-        if (rule.name.indexOf('keyframes') !== -1) {
-          rule.params = `:global(${rule.params})`;
-        }
-      });
+      // @TODO: в будущем postcss-iscc-keyframes не будет поддерживать эту логику
+      if (globalizeKeyframes) {
+        css.walkAtRules(rule => {
+          if (rule.name.indexOf('keyframes') !== -1) {
+            rule.params = `:global(${rule.params})`;
+          }
+        });
+      }
 
       css.walkRules(rule => {
         const outer = rule.parent;

@@ -1,0 +1,13 @@
+@keyframes myCoolestAnimation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.foo {
+  animation: myCoolestAnimation;
+}
