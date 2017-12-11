@@ -15,9 +15,11 @@ function processCss(file) {
   const css = `@global-import "${file}"`;
 
   return new Promise(resolve => {
-    postcss([globalImport, modules({
-      getJSON: ()=> {}
-    }), cssnano()])
+    postcss([
+      globalImport,
+      modules({ getJSON: ()=> {} }),
+      cssnano()
+    ])
       .process(css, { from: masterPath, to: '_.css' })
       .then(result => {
         resolve(result.css);

@@ -1,0 +1,4 @@
+
+.foo#content.active > .bar::first-line [data-content], .foo:not(:visited) {
+  color: red;
+}

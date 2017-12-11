@@ -2,6 +2,42 @@ const fs = require('fs');
 const path = require('path');
 const nodeResolve = require('resolve');
 const postcss = require('postcss');
+const selectorTokenizer = require('css-selector-tokenizer');
+
+function globalizeSelectors (selector) {
+  const selectors = selectorTokenizer.parse(selector);
+
+  const wrapToGlobal = (classNode) => {
+    return {
+      type: 'nested-pseudo-class',
+      name: 'global',
+      nodes: [
+        {
+          type: 'selector',
+          nodes: [ classNode ]
+        }
+      ]
+    }
+  };
+
+  const walkNodes = (nodes) => {
+    return nodes.map(node => {
+      if (node.type === 'class' || node.type === 'id') {
+        return wrapToGlobal(node);
+      } else if (node.type === 'selector' || (node.type === 'nested-pseudo-class' && node.name !== 'global')) {
+        return Object.assign({}, node, {
+          nodes: walkNodes(node.nodes)
+        });
+      }
+      return node;
+    });
+  };
+
+  return selectorTokenizer.stringify({
+    type: 'selectors',
+    nodes: walkNodes(selectors.nodes)
+  });
+}
 
 /**
  * Plugin for PostCSS, which can do global import in Css.
@@ -32,8 +68,8 @@ module.exports = postcss.plugin('postcss-global-import', function (options) {
         const inKeyframes = outer.name && outer.name.indexOf('keyframes') !== -1;
 
         if (!inKeyframes) {
-          rule.replaceWith(postcss.parse(`:global ${rule.toString()}`, {
-            from: modulePath
+          rule.replaceWith(rule.clone({
+            selector: globalizeSelectors(rule.selector)
           }));
         }
       });
