@@ -1,6 +1,6 @@
 {
   "name": "postcss-global-import",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Post Css plugin for global import css.",
   "main": "index.js",
   "scripts": {
