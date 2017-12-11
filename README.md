@@ -76,7 +76,7 @@ So, in other words, if you are using [postcss-modules](https://github.com/css-mo
 }
 
 .foo {
-	animation: myCoolAnimation;
+  animation: myCoolAnimation;
 }
 ```
 
@@ -87,7 +87,7 @@ And animation property value `myCoolAnimation` will be renamed:
 }
 
 .foo {
-	animation: _myCoolAnimation__7zliz_1;
+  animation: _myCoolAnimation__7zliz_1;
 }
 ```
 
