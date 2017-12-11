@@ -58,7 +58,9 @@ module.exports = postcss.plugin('postcss-global-import', function (options) {
       });
 
       // Выставляем названия директив @keyframes в global
-      // @TODO: в будущем postcss-iscc-keyframes не будет поддерживать эту логику
+      // @TODO: данная логика работает только для плагина postcss-modules-local-by-default
+      // В будущем, когда postcss-modules перейдет на postcss-icss-selectors и postcss-icss-keyframes
+      // последний не будет поддерживать именно такую семантику
       if (globalizeKeyframes) {
         css.walkAtRules(rule => {
           if (rule.name.indexOf('keyframes') !== -1) {
