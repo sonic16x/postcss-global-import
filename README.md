@@ -60,7 +60,7 @@ We will get:
 In case of sync enabled this plugin will be work synchronously. It's useful in case with usage
 `css-modules-require-hook` hook, which doesn't support async postcss plugins.
 
-## globalizeKeyframes
+### globalizeKeyframes
 
 By default, `postcss-global-import` do nothing with keyframe names,
 because there is no way to escape animation name in `animation-name` or a`animation` properties
